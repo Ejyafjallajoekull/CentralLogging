@@ -16,6 +16,14 @@ import java.util.logging.Logger;
  *
  */
 public class LoggingHandler {
+	
+	/**
+	 * The version number of this program.
+	 */
+	public static final String VERSION = "1.0.0.1";
+	/**
+	 * The centralised logger to be used.
+	 */
 	private static final Logger LOG = Logger.getLogger(LoggingHandler.class.getName());
 	/**
 	 * The file extension used for log files.
@@ -30,15 +38,15 @@ public class LoggingHandler {
 	 * Start the log writing procedure.
 	 */
 	public static void startLogWriting() throws LoggingFailureException {
-		if (logHandler == null) {
-			if (!logFolder.exists()) {
-				logFolder.mkdirs(); // create directory if necessary
-			} else if (!logFolder.isDirectory()) {
+		if (LoggingHandler.logHandler == null) {
+			if (!LoggingHandler.getLoggingFolder().exists()) {
+				LoggingHandler.getLoggingFolder().mkdirs(); // create directory if necessary
+			} else if (!LoggingHandler.getLoggingFolder().isDirectory()) {
 				throw new LoggingFailureException("The specified logging folder exists, but is not a directory.");
 			}
 			// delete the oldest files
 			File[] currentLogFiles = LoggingHandler.getLogFiles();
-			for (int i = 0; i <= currentLogFiles.length - LoggingHandler.numberLogFiles; i++) {
+			for (int i = 0; i <= currentLogFiles.length - LoggingHandler.getNumberLogFiles(); i++) {
 				if (!currentLogFiles[i].delete()) {
 					LoggingHandler.getLog().warning("The old  log file " + currentLogFiles[i] + " could not be deleted.");
 				}
@@ -48,20 +56,20 @@ public class LoggingHandler {
 				String startingTime = String.format("%d_%d_%d_%d_%d_%d_%d", dateTimeNow.getYear(), 
 						dateTimeNow.getMonthValue(), dateTimeNow.getDayOfMonth(), dateTimeNow.getHour(), 
 						dateTimeNow.getMinute(), dateTimeNow.getSecond(), dateTimeNow.getNano());
-				logHandler = new FileHandler((logFolder.toPath().resolve(logFileName + "_" 
+				LoggingHandler.logHandler = new FileHandler((logFolder.toPath().resolve(logFileName + "_" 
 						 + startingTime + LOG_FILE_EXTENSION)).toString()); // always write to first log file
-				LOG.addHandler(logHandler);
+				LoggingHandler.getLog().addHandler(LoggingHandler.logHandler);
 			} catch (SecurityException e) {
-				LOG.log(Level.SEVERE, "Security problem accessing log file.", e);
+				LoggingHandler.getLog().log(Level.SEVERE, "Security problem accessing log file.", e);
 				e.printStackTrace();
 				throw new LoggingFailureException("Security problem accessing log file.", e);
 			} catch (IOException e) {
-				LOG.log(Level.SEVERE, "The log file could not be written to.", e);
+				LoggingHandler.getLog().log(Level.SEVERE, "The log file could not be written to.", e);
 				e.printStackTrace();
 				throw new LoggingFailureException("The log file could not be written to.", e);
 			}
 		} else {
-			LOG.warning("Logging has already been started.");
+			LoggingHandler.getLog().warning("Logging has already been started.");
 		}
 	}
 	
@@ -69,18 +77,19 @@ public class LoggingHandler {
 	 * Stop the log writing procedure.
 	 */
 	public static void stopLogWriting() throws LoggingFailureException {
-		if(logHandler != null) {
+		if(LoggingHandler.logHandler != null) {
 			try {
-				logHandler.close();
-				LOG.removeHandler(logHandler);
-				logHandler = null;
+				LoggingHandler.logHandler.close();
+				LoggingHandler.getLog().removeHandler(logHandler);
+				LoggingHandler.logHandler = null;
 			} catch (SecurityException e) { // false if logging could not be stopped
 				e.printStackTrace();
-				LOG.log(Level.WARNING, "Logging could not be stopped.", e);
+				LoggingHandler.getLog().log(Level.WARNING, "Logging could not be stopped.", e);
 				throw new LoggingFailureException( "Logging could not be stopped.", e);
 			}
 		} else {
-			LOG.warning("No logging is currently performed and can thereby not be stopped.");
+			LoggingHandler.getLog().warning("No logging is currently performed "
+					+ "and can thereby not be stopped.");
 		}
 	}
 
@@ -91,11 +100,12 @@ public class LoggingHandler {
 	 */
 	public static File[] getLogFiles() {
 		// list all log files created with the current settings
-		return logFolder.listFiles(new FileFilter() {
+		return LoggingHandler.getLoggingFolder().listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File arg0) {
 				String name = arg0.getName();
-				return name.startsWith(logFileName) && name.endsWith(LOG_FILE_EXTENSION);
+				return name.startsWith(LoggingHandler.logFileName) 
+						&& name.endsWith(LoggingHandler.LOG_FILE_EXTENSION);
 			}
 		});
 	}
@@ -106,7 +116,7 @@ public class LoggingHandler {
 	 * @return the current Logger
 	 */
 	public static Logger getLog() {
-		return LOG;
+		return LoggingHandler.LOG;
 	}
 
 	/**
@@ -115,7 +125,7 @@ public class LoggingHandler {
 	 * @return the logging folder as File
 	 */
 	public static File getLoggingFolder() {
-		return logFolder;
+		return LoggingHandler.logFolder;
 	}
 
 	/** 
@@ -152,7 +162,7 @@ public class LoggingHandler {
 	 * @return the name of logging files
 	 */
 	public static String getLogFileName() {
-		return logFileName;
+		return LoggingHandler.logFileName;
 	}
 
 	/**
@@ -176,7 +186,7 @@ public class LoggingHandler {
 	 * @return the number of logging files
 	 */
 	public static int getNumberLogFiles() {
-		return numberLogFiles;
+		return LoggingHandler.numberLogFiles;
 	}
 
 	/**
