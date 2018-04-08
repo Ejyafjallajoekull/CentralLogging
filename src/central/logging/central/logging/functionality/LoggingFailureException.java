@@ -1,4 +1,4 @@
-package central.logging.functionality;
+package central.logging.central.logging.functionality;
 
 public class LoggingFailureException extends Exception {
 

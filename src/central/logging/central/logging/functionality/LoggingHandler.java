@@ -1,4 +1,4 @@
-package central.logging.functionality;
+package central.logging.central.logging.functionality;
 
 import java.io.File;
 import java.io.FileFilter;

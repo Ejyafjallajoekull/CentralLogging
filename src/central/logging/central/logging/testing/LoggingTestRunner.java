@@ -1,4 +1,4 @@
-package central.logging.testing;
+package central.logging.central.logging.testing;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-import central.logging.functionality.LoggingFailureException;
-import central.logging.functionality.LoggingHandler;
+import central.logging.central.logging.functionality.LoggingFailureException;
+import central.logging.central.logging.functionality.LoggingHandler;
 
 /**
  * The LoggingTestRunner class can perform some basic tests to check 
