@@ -20,7 +20,7 @@ public class LoggingHandler {
 	/**
 	 * The version number of this program.
 	 */
-	public static final String VERSION = "1.0.0.3";
+	public static final String VERSION = "1.1.0.0";
 	/**
 	 * The centralised logger to be used.
 	 */
@@ -34,7 +34,7 @@ public class LoggingHandler {
 	private static String logFileName = "Log";
 	private static int numberLogFiles = 5;
 	
-	/*
+	/**
 	 * Start the log writing procedure.
 	 */
 	public static void startLogWriting() throws LoggingFailureException {
@@ -56,8 +56,9 @@ public class LoggingHandler {
 				String startingTime = String.format("%d_%d_%d_%d_%d_%d_%d", dateTimeNow.getYear(), 
 						dateTimeNow.getMonthValue(), dateTimeNow.getDayOfMonth(), dateTimeNow.getHour(), 
 						dateTimeNow.getMinute(), dateTimeNow.getSecond(), dateTimeNow.getNano());
-				LoggingHandler.logHandler = new FileHandler((logFolder.toPath().resolve(logFileName + "_" 
-						 + startingTime + LOG_FILE_EXTENSION)).toString()); // always write to first log file
+				LoggingHandler.logHandler = new FileHandler((LoggingHandler.logFolder.toPath().resolve(
+						LoggingHandler.logFileName + "_" + startingTime 
+						+ LoggingHandler.LOG_FILE_EXTENSION)).toString()); // always write to first log file
 				LoggingHandler.getLog().addHandler(LoggingHandler.logHandler);
 			} catch (SecurityException e) {
 				LoggingHandler.getLog().log(Level.SEVERE, "Security problem accessing log file.", e);
@@ -180,7 +181,7 @@ public class LoggingHandler {
 
 	/**
 	 * Get the number of logging files that will be saved.
-	 * If there are more files than specified the oldest ones
+	 * If there are more files than specified, the oldest ones
 	 * are deleted.
 	 * 
 	 * @return the number of logging files
