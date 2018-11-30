@@ -25,7 +25,7 @@ public class Logging {
 	/**
 	 * The centralised logger to be used.
 	 */
-	private Logger log = Logger.getLogger(Logging.class.getName() + "." + Logging.logIdentifier++);
+	private final Logger log = Logger.getLogger(Logging.class.getName() + "." + Logging.logIdentifier++);
 
 	private Handler logHandler = null;
 	private File logFolder = new File("Logs"); // the folder containing all log files
@@ -36,7 +36,8 @@ public class Logging {
 	 * Create a Logging facility with default values.
 	 */
 	public Logging() {
-		// default constructor
+		// disable logging to console via global logger
+		this.getLog().setUseParentHandlers(false);
 	}
 	
 	/**
@@ -48,6 +49,8 @@ public class Logging {
 	public Logging(File loggingFolder, String logFileName) {
 		this.setLoggingFolder(loggingFolder);
 		this.setLogFileName(logFileName);
+		// disable logging to console via global logger
+		this.getLog().setUseParentHandlers(false);
 	}
 	
 	/**
