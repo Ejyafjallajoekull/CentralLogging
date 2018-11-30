@@ -2,7 +2,6 @@ package central.logging.testing;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,7 +46,7 @@ public class LoggingTestRunner {
 			num = r.nextInt(Integer.MAX_VALUE) + 1;
 			LoggingHandler.setNumberLogFiles(num);
 			if (LoggingHandler.getNumberLogFiles() != num) {
-				throw new InvalidParameterException("The number of logging files set (" + 
+				throw new IllegalArgumentException("The number of logging files set (" + 
 						num + ") is not equal to the returned one (" + 
 						LoggingHandler.getNumberLogFiles() + ")");
 			}
@@ -56,7 +55,7 @@ public class LoggingTestRunner {
 			num = r.nextInt(Integer.MAX_VALUE) * (-1);
 			LoggingHandler.setNumberLogFiles(num);
 			if (LoggingHandler.getNumberLogFiles() <= 0) {
-				throw new InvalidParameterException("The number of logging files set (" + 
+				throw new IllegalArgumentException("The number of logging files set (" + 
 						num + ") is not properly converted to a positive one (" + 
 						LoggingHandler.getNumberLogFiles() + ")");
 			}
@@ -75,19 +74,19 @@ public class LoggingTestRunner {
 			testName = new String(arr);
 			LoggingHandler.setLogFileName(testName);
 			if (LoggingHandler.getLogFileName() != testName) {
-				throw new InvalidParameterException("The name of the logging files set (" + 
+				throw new IllegalArgumentException("The name of the logging files set (" + 
 						testName + ") is not equal to the returned one (" + 
 						LoggingHandler.getLogFileName() + ")");
 			}
 		}
 		LoggingHandler.setLogFileName(""); // check empty strings
 		if (LoggingHandler.getLogFileName().length() <= 0) {
-			throw new InvalidParameterException("The name of the logging files can"
+			throw new IllegalArgumentException("The name of the logging files can"
 					+ " be set to an empty String");
 		}
 		LoggingHandler.setLogFileName(null); // check null
 		if (LoggingHandler.getLogFileName() == null || LoggingHandler.getLogFileName().length() <= 0) {
-			throw new InvalidParameterException("The name of the logging files can"
+			throw new IllegalArgumentException("The name of the logging files can"
 					+ " be set to null");
 		}
 		System.out.println("Test LoggingHandler.setLogFileName passed");
@@ -98,7 +97,7 @@ public class LoggingTestRunner {
 		File folder = new File(folderPath);
 		LoggingHandler.setLoggingFolder(folderPath);
 		if (!LoggingHandler.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					LoggingHandler.getLoggingFolder() + ")");
 		}
@@ -106,7 +105,7 @@ public class LoggingTestRunner {
 		folder = new File(folderPath);
 		LoggingHandler.setLoggingFolder(folder);
 		if (!LoggingHandler.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					LoggingHandler.getLoggingFolder() + ")");
 		}
@@ -116,7 +115,7 @@ public class LoggingTestRunner {
 		folder = new File(folderPath);
 		LoggingHandler.setLoggingFolder(folderPath);
 		if (!LoggingHandler.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					LoggingHandler.getLoggingFolder() + ")");
 		}
@@ -126,7 +125,7 @@ public class LoggingTestRunner {
 		folder = new File(folderPath);
 		LoggingHandler.setLoggingFolder(folder);
 		if (!LoggingHandler.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					LoggingHandler.getLoggingFolder() + ")");
 		}
@@ -134,19 +133,19 @@ public class LoggingTestRunner {
 		folderPath = null;
 		LoggingHandler.setLoggingFolder(folder); // test null File
 		if (LoggingHandler.getLoggingFolder() == null) {
-			throw new InvalidParameterException("The logging folder path can be set " +
+			throw new IllegalArgumentException("The logging folder path can be set " +
 					"to null");
 		}
 		LoggingHandler.setLoggingFolder(folderPath); // test null String
 		if (LoggingHandler.getLoggingFolder() == null) {
-			throw new InvalidParameterException("The logging folder path can be set " +
+			throw new IllegalArgumentException("The logging folder path can be set " +
 					"to null");
 		}
 		folderPath = "";
 		folder = new File(folderPath);
 		LoggingHandler.setLoggingFolder(folderPath); // test empty String
 		if (!LoggingHandler.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder.getAbsolutePath() + ") is different to the returned one (" +
 					LoggingHandler.getLoggingFolder().getAbsolutePath() + ")");
 		}
@@ -162,7 +161,7 @@ public class LoggingTestRunner {
 		ArrayList<File> logFiles = new ArrayList<File>();
 		// test empty list
 		if (!Arrays.equals(LoggingHandler.getLogFiles(), logFiles.toArray())) {
-			throw new InvalidParameterException("The list of tested files ("
+			throw new IllegalArgumentException("The list of tested files ("
 					+ logFiles + "is not equal to the returned ones ("
 					+ Arrays.toString(LoggingHandler.getLogFiles()) + ").");
 		}
@@ -171,7 +170,7 @@ public class LoggingTestRunner {
 		try {
 			logFiles.get(0).createNewFile();
 			if (!Arrays.equals(LoggingHandler.getLogFiles(), logFiles.toArray())) {
-				throw new InvalidParameterException("The list of tested files ("
+				throw new IllegalArgumentException("The list of tested files ("
 						+ logFiles + "is not equal to the returned ones ("
 						+ Arrays.toString(LoggingHandler.getLogFiles()) + ").");
 			}
@@ -182,7 +181,7 @@ public class LoggingTestRunner {
 			}
 			Collections.sort(logFiles); // need as getLogFiles returns the files sorted in alphabetical order
 			if (!Arrays.equals(LoggingHandler.getLogFiles(), logFiles.toArray())) {
-				throw new InvalidParameterException("The list of tested files ("
+				throw new IllegalArgumentException("The list of tested files ("
 						+ logFiles + "is not equal to the returned ones ("
 						+ Arrays.toString(LoggingHandler.getLogFiles()) + ").");
 			}
@@ -190,13 +189,13 @@ public class LoggingTestRunner {
 			Random r = new Random();
 			logFiles.remove(r.nextInt(logFiles.size())).delete();
 			if (!Arrays.equals(LoggingHandler.getLogFiles(), logFiles.toArray())) {
-				throw new InvalidParameterException("The list of tested files ("
+				throw new IllegalArgumentException("The list of tested files ("
 						+ logFiles + "is not equal to the returned ones ("
 						+ Arrays.toString(LoggingHandler.getLogFiles()) + ").");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Test file ("
+			throw new IllegalArgumentException("Test file ("
 					+ LoggingHandler.getLoggingFolder().toPath().resolve(name).toFile()
 					+ "could not be accessed.");
 		} finally { // delete all the files created at the end of the testing
@@ -220,7 +219,7 @@ public class LoggingTestRunner {
 			LoggingHandler.stopLogWriting();
 		} catch (LoggingFailureException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Stopping a non running logging process "
+			throw new IllegalArgumentException("Stopping a non running logging process "
 					+ "caused a problem.");
 		}
 		// start log writing
@@ -229,12 +228,12 @@ public class LoggingTestRunner {
 			// start log writing again, should not cause any trouble
 			LoggingHandler.startLogWriting();
 			if (LoggingHandler.getLogFiles().length != 1) {
-				throw new InvalidParameterException("There should be one logging file, "
+				throw new IllegalArgumentException("There should be one logging file, "
 						+ "but " + LoggingHandler.getLogFiles().length + " are present.");
 			}
 		} catch (LoggingFailureException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Starting a non running logging process "
+			throw new IllegalArgumentException("Starting a non running logging process "
 					+ "caused a problem.");
 		}
 		for (int i = 2; i < 100; i++) { // stop and restart a few times
@@ -243,28 +242,28 @@ public class LoggingTestRunner {
 				Thread.sleep(1);
 			} catch (LoggingFailureException e) {
 				e.printStackTrace();
-				throw new InvalidParameterException("Stopping a running logging process "
+				throw new IllegalArgumentException("Stopping a running logging process "
 						+ "caused a problem.");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				throw new InvalidParameterException("Could not put this thread to sleep, "
+				throw new IllegalArgumentException("Could not put this thread to sleep, "
 						+ "but thats necessary for this test to work properly.");
 			}
 			try {
 				LoggingHandler.startLogWriting();
 			} catch (LoggingFailureException e) {
 				e.printStackTrace();
-				throw new InvalidParameterException("Starting a non running logging process "
+				throw new IllegalArgumentException("Starting a non running logging process "
 						+ "caused a problem.");
 			}
 			if (i < num) {
 				if (LoggingHandler.getLogFiles().length != i) {
-					throw new InvalidParameterException("Expected " + i + " log files, but found "
+					throw new IllegalArgumentException("Expected " + i + " log files, but found "
 							+ "only " + LoggingHandler.getLogFiles().length + ".");
 				}
 			} else {
 				if (LoggingHandler.getLogFiles().length > num) {
-					throw new InvalidParameterException("There are " + LoggingHandler.getLogFiles().length
+					throw new IllegalArgumentException("There are " + LoggingHandler.getLogFiles().length
 							+ " log files, but the maximum number is set to " + num + ".");
 				}
 			}
@@ -274,7 +273,7 @@ public class LoggingTestRunner {
 			LoggingHandler.stopLogWriting();
 		} catch (LoggingFailureException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Stopping a running logging process "
+			throw new IllegalArgumentException("Stopping a running logging process "
 					+ "caused a problem.");
 		}
 		for (File f : LoggingHandler.getLogFiles()) {
@@ -293,7 +292,7 @@ public class LoggingTestRunner {
 			num = r.nextInt(Integer.MAX_VALUE) + 1;
 			testLogger.setNumberLogFiles(num);
 			if (testLogger.getNumberLogFiles() != num) {
-				throw new InvalidParameterException("The number of logging files set (" + 
+				throw new IllegalArgumentException("The number of logging files set (" + 
 						num + ") is not equal to the returned one (" + 
 						testLogger.getNumberLogFiles() + ")");
 			}
@@ -303,7 +302,7 @@ public class LoggingTestRunner {
 			num = r.nextInt(Integer.MAX_VALUE) * (-1);
 			testLogger.setNumberLogFiles(num);
 			if (testLogger.getNumberLogFiles() <= 0) {
-				throw new InvalidParameterException("The number of logging files set (" + 
+				throw new IllegalArgumentException("The number of logging files set (" + 
 						num + ") is not properly converted to a positive one (" + 
 						testLogger.getNumberLogFiles() + ")");
 			}
@@ -323,19 +322,19 @@ public class LoggingTestRunner {
 			testName = new String(arr);
 			testLogger.setLogFileName(testName);
 			if (testLogger.getLogFileName() != testName) {
-				throw new InvalidParameterException("The name of the logging files set (" + 
+				throw new IllegalArgumentException("The name of the logging files set (" + 
 						testName + ") is not equal to the returned one (" + 
 						testLogger.getLogFileName() + ")");
 			}
 		}
 		testLogger.setLogFileName(""); // check empty strings
 		if (testLogger.getLogFileName().length() <= 0) {
-			throw new InvalidParameterException("The name of the logging files can"
+			throw new IllegalArgumentException("The name of the logging files can"
 					+ " be set to an empty String");
 		}
 		testLogger.setLogFileName(null); // check null
 		if (testLogger.getLogFileName() == null || testLogger.getLogFileName().length() <= 0) {
-			throw new InvalidParameterException("The name of the logging files can"
+			throw new IllegalArgumentException("The name of the logging files can"
 					+ " be set to null");
 		}
 		System.out.println("Test (new Logging()).setLogFileName passed");
@@ -347,7 +346,7 @@ public class LoggingTestRunner {
 		Logging testLogger = new Logging();
 		testLogger.setLoggingFolder(folderPath);
 		if (!testLogger.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					testLogger.getLoggingFolder() + ")");
 		}
@@ -355,7 +354,7 @@ public class LoggingTestRunner {
 		folder = new File(folderPath);
 		testLogger.setLoggingFolder(folder);
 		if (!testLogger.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					testLogger.getLoggingFolder() + ")");
 		}
@@ -365,7 +364,7 @@ public class LoggingTestRunner {
 		folder = new File(folderPath);
 		testLogger.setLoggingFolder(folderPath);
 		if (!testLogger.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					testLogger.getLoggingFolder() + ")");
 		}
@@ -375,7 +374,7 @@ public class LoggingTestRunner {
 		folder = new File(folderPath);
 		testLogger.setLoggingFolder(folder);
 		if (!testLogger.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder + ") is different to the returned one (" +
 					testLogger.getLoggingFolder() + ")");
 		}
@@ -383,19 +382,19 @@ public class LoggingTestRunner {
 		folderPath = null;
 		testLogger.setLoggingFolder(folder); // test null File
 		if (testLogger.getLoggingFolder() == null) {
-			throw new InvalidParameterException("The logging folder path can be set " +
+			throw new IllegalArgumentException("The logging folder path can be set " +
 					"to null");
 		}
 		testLogger.setLoggingFolder(folderPath); // test null String
 		if (testLogger.getLoggingFolder() == null) {
-			throw new InvalidParameterException("The logging folder path can be set " +
+			throw new IllegalArgumentException("The logging folder path can be set " +
 					"to null");
 		}
 		folderPath = "";
 		folder = new File(folderPath);
 		testLogger.setLoggingFolder(folderPath); // test empty String
 		if (!testLogger.getLoggingFolder().equals(folder)) {
-			throw new InvalidParameterException("The logging folder path set (" +
+			throw new IllegalArgumentException("The logging folder path set (" +
 					folder.getAbsolutePath() + ") is different to the returned one (" +
 					testLogger.getLoggingFolder().getAbsolutePath() + ")");
 		}
@@ -412,7 +411,7 @@ public class LoggingTestRunner {
 		ArrayList<File> logFiles = new ArrayList<File>();
 		// test empty list
 		if (!Arrays.equals(testLogger.getLogFiles(), logFiles.toArray())) {
-			throw new InvalidParameterException("The list of tested files ("
+			throw new IllegalArgumentException("The list of tested files ("
 					+ logFiles + "is not equal to the returned ones ("
 					+ Arrays.toString(testLogger.getLogFiles()) + ").");
 		}
@@ -421,7 +420,7 @@ public class LoggingTestRunner {
 		try {
 			logFiles.get(0).createNewFile();
 			if (!Arrays.equals(testLogger.getLogFiles(), logFiles.toArray())) {
-				throw new InvalidParameterException("The list of tested files ("
+				throw new IllegalArgumentException("The list of tested files ("
 						+ logFiles + "is not equal to the returned ones ("
 						+ Arrays.toString(testLogger.getLogFiles()) + ").");
 			}
@@ -432,7 +431,7 @@ public class LoggingTestRunner {
 			}
 			Collections.sort(logFiles); // need as getLogFiles returns the files sorted in alphabetical order
 			if (!Arrays.equals(testLogger.getLogFiles(), logFiles.toArray())) {
-				throw new InvalidParameterException("The list of tested files ("
+				throw new IllegalArgumentException("The list of tested files ("
 						+ logFiles + "is not equal to the returned ones ("
 						+ Arrays.toString(testLogger.getLogFiles()) + ").");
 			}
@@ -440,13 +439,13 @@ public class LoggingTestRunner {
 			Random r = new Random();
 			logFiles.remove(r.nextInt(logFiles.size())).delete();
 			if (!Arrays.equals(testLogger.getLogFiles(), logFiles.toArray())) {
-				throw new InvalidParameterException("The list of tested files ("
+				throw new IllegalArgumentException("The list of tested files ("
 						+ logFiles + "is not equal to the returned ones ("
 						+ Arrays.toString(testLogger.getLogFiles()) + ").");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Test file ("
+			throw new IllegalArgumentException("Test file ("
 					+ testLogger.getLoggingFolder().toPath().resolve(name).toFile()
 					+ "could not be accessed.");
 		} finally { // delete all the files created at the end of the testing
@@ -471,7 +470,7 @@ public class LoggingTestRunner {
 			testLogger.stopLogWriting();
 		} catch (LoggingFailureException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Stopping a non running logging process "
+			throw new IllegalArgumentException("Stopping a non running logging process "
 					+ "caused a problem.");
 		}
 		// start log writing
@@ -480,12 +479,12 @@ public class LoggingTestRunner {
 			// start log writing again, should not cause any trouble
 			testLogger.startLogWriting();
 			if (testLogger.getLogFiles().length != 1) {
-				throw new InvalidParameterException("There should be one logging file, "
+				throw new IllegalArgumentException("There should be one logging file, "
 						+ "but " + testLogger.getLogFiles().length + " are present.");
 			}
 		} catch (LoggingFailureException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Starting a non running logging process "
+			throw new IllegalArgumentException("Starting a non running logging process "
 					+ "caused a problem.");
 		}
 		for (int i = 2; i < 100; i++) { // stop and restart a few times
@@ -494,28 +493,28 @@ public class LoggingTestRunner {
 				Thread.sleep(1);
 			} catch (LoggingFailureException e) {
 				e.printStackTrace();
-				throw new InvalidParameterException("Stopping a running logging process "
+				throw new IllegalArgumentException("Stopping a running logging process "
 						+ "caused a problem.");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				throw new InvalidParameterException("Could not put this thread to sleep, "
+				throw new IllegalArgumentException("Could not put this thread to sleep, "
 						+ "but thats necessary for this test to work properly.");
 			}
 			try {
 				testLogger.startLogWriting();
 			} catch (LoggingFailureException e) {
 				e.printStackTrace();
-				throw new InvalidParameterException("Starting a non running logging process "
+				throw new IllegalArgumentException("Starting a non running logging process "
 						+ "caused a problem.");
 			}
 			if (i < num) {
 				if (testLogger.getLogFiles().length != i) {
-					throw new InvalidParameterException("Expected " + i + " log files, but found "
+					throw new IllegalArgumentException("Expected " + i + " log files, but found "
 							+ "only " + testLogger.getLogFiles().length + ".");
 				}
 			} else {
 				if (testLogger.getLogFiles().length > num) {
-					throw new InvalidParameterException("There are " + testLogger.getLogFiles().length
+					throw new IllegalArgumentException("There are " + testLogger.getLogFiles().length
 							+ " log files, but the maximum number is set to " + num + ".");
 				}
 			}
@@ -525,7 +524,7 @@ public class LoggingTestRunner {
 			testLogger.stopLogWriting();
 		} catch (LoggingFailureException e) {
 			e.printStackTrace();
-			throw new InvalidParameterException("Stopping a running logging process "
+			throw new IllegalArgumentException("Stopping a running logging process "
 					+ "caused a problem.");
 		}
 		for (File f : testLogger.getLogFiles()) {
@@ -539,12 +538,12 @@ public class LoggingTestRunner {
 		Logging firstLog = new Logging();
 		Logging secondLog = null;
 		if (firstLog.equals(secondLog)) {
-			throw new InvalidParameterException(String.format("%s and %s should not be equal.", 
+			throw new IllegalArgumentException(String.format("%s and %s should not be equal.", 
 					firstLog, secondLog));
 		}
 		secondLog = new Logging();
 		if (!firstLog.equals(secondLog)) {
-			throw new InvalidParameterException(String.format("%s and %s should be equal.", 
+			throw new IllegalArgumentException(String.format("%s and %s should be equal.", 
 					firstLog, secondLog));
 		}
 	}
