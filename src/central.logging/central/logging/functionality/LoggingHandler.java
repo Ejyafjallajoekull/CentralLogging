@@ -20,7 +20,7 @@ public class LoggingHandler {
 	/**
 	 * The version number of this program.
 	 */
-	public static final String VERSION = "1.1.1.0";
+	public static final String VERSION = "1.2.0.0";
 	/**
 	 * The centralised logger to be used.
 	 */
@@ -137,12 +137,13 @@ public class LoggingHandler {
 	 * It must be set before logging is started.
 	 * 
 	 * @param logFolder - the folder to save logging files to
+	 * @throws IllegalArgumentException if the folder is null
 	 */
 	public static void setLoggingFolder(File logFolder) {
 		if (logFolder != null) {
 			LoggingHandler.logFolder = logFolder;
 		} else {
-			LoggingHandler.getLog().warning("The logging folder cannot be set to null.");
+			throw new IllegalArgumentException("The logging folder cannot be null.");
 		}
 	}
 	
@@ -151,12 +152,13 @@ public class LoggingHandler {
 	 * It must be set before logging is started.
 	 * 
 	 * @param logFolderPath - the path to the folder to save logging files to
+	 * @throws IllegalArgumentException if the folder path is null
 	 */
 	public static void setLoggingFolder(String logFolderPath) {
 		if (logFolderPath != null) {
 			LoggingHandler.logFolder = new File(logFolderPath);
 		} else {
-			LoggingHandler.getLog().warning("The logging folder cannot be set to null.");
+			throw new IllegalArgumentException("The logging folder cannot be null.");
 		}
 	}
 
@@ -173,12 +175,13 @@ public class LoggingHandler {
 	 * Set the base name to use as template for all logging files.
 	 * 
 	 * @param logFileName - the name of the logging files
+	 * @throws IllegalArgumentException if the log file name is null or empty
 	 */
 	public static void setLogFileName(String logFileName) {
 		if (logFileName != null && logFileName.length() > 0) {
 			LoggingHandler.logFileName = logFileName;
 		} else {
-			LoggingHandler.getLog().warning("The logging file name cannot be set to null.");
+			throw new IllegalArgumentException("The log file name cannot be null or empty.");
 		}
 	}
 
@@ -198,12 +201,13 @@ public class LoggingHandler {
 	 * the oldest.
 	 * 
 	 * @param numberLogFiles - the number of logging files to set
+	 * @throws IllegalArgumentException if the number of log files is less than 1
 	 */
-	public static void setNumberLogFiles(int numberLogFiles) {
+	public static void setNumberLogFiles(int numberLogFiles) throws IllegalArgumentException {
 		if (numberLogFiles > 0) {
 			LoggingHandler.numberLogFiles = numberLogFiles;
 		} else {
-			LoggingHandler.getLog().warning("The number of logging files cannot be zero or less.");
+			throw new IllegalArgumentException("The number of log files cannot be zero or less.");
 		}
 	}
 }

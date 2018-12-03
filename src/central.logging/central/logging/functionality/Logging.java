@@ -150,12 +150,13 @@ public class Logging {
 	 * It must be set before logging is started.
 	 * 
 	 * @param logFolder - the folder to save logging files to
+	 * @throws IllegalArgumentException if the folder is null
 	 */
 	public void setLoggingFolder(File logFolder) {
 		if (logFolder != null) {
 			this.logFolder = logFolder;
 		} else {
-			this.getLog().warning("The logging folder cannot be set to null.");
+			throw new IllegalArgumentException("The logging folder cannot be null.");
 		}
 	}
 	
@@ -164,12 +165,13 @@ public class Logging {
 	 * It must be set before logging is started.
 	 * 
 	 * @param logFolderPath - the path to the folder to save logging files to
+	 * @throws IllegalArgumentException if the folder path is null
 	 */
 	public void setLoggingFolder(String logFolderPath) {
 		if (logFolderPath != null) {
 			this.logFolder = new File(logFolderPath);
 		} else {
-			this.getLog().warning("The logging folder cannot be set to null.");
+			throw new IllegalArgumentException("The logging folder cannot be null.");
 		}
 	}
 
@@ -186,12 +188,13 @@ public class Logging {
 	 * Set the base name to use as template for the logging files.
 	 * 
 	 * @param logFileName - the name of the logging files
+	 * @throws IllegalArgumentException if the log file name is null or empty
 	 */
 	public void setLogFileName(String logFileName) {
 		if (logFileName != null && logFileName.length() > 0) {
 			this.logFileName = logFileName;
 		} else {
-			this.getLog().warning("The logging file name cannot be set to null.");
+			throw new IllegalArgumentException("The log file name cannot be null or empty.");
 		}
 	}
 
@@ -211,12 +214,13 @@ public class Logging {
 	 * the oldest.
 	 * 
 	 * @param numberLogFiles - the number of logging files to set
+	 * @throws IllegalArgumentException if the number of log files is less than 1
 	 */
 	public void setNumberLogFiles(int numberLogFiles) {
 		if (numberLogFiles > 0) {
 			this.numberLogFiles = numberLogFiles;
-		} else {
-			this.getLog().warning("The number of logging files cannot be zero or less.");
+		}  else {
+			throw new IllegalArgumentException("The number of log files cannot be zero or less.");
 		}
 	}
 

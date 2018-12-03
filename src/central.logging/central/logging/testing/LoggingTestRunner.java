@@ -53,11 +53,13 @@ public class LoggingTestRunner {
 		}
 		for (int i = 0; i < rep; i++) { // test negative numbers and zero
 			num = r.nextInt(Integer.MAX_VALUE) * (-1);
-			LoggingHandler.setNumberLogFiles(num);
-			if (LoggingHandler.getNumberLogFiles() <= 0) {
-				throw new IllegalArgumentException("The number of logging files set (" + 
-						num + ") is not properly converted to a positive one (" + 
-						LoggingHandler.getNumberLogFiles() + ")");
+			try {
+				LoggingHandler.setNumberLogFiles(num);
+				throw new IllegalArgumentException(String.format("Setting the log file number to "
+						+ "%s should fail, but resulted in setting the log file number to %s.", 
+						num, LoggingHandler.getNumberLogFiles()));
+			} catch (IllegalArgumentException e) {
+				// Do nothing as this is expected behaviour.
 			}
 		}
 		System.out.println("Test LoggingHandler.setNumberLogFiles passed");
@@ -79,15 +81,23 @@ public class LoggingTestRunner {
 						LoggingHandler.getLogFileName() + ")");
 			}
 		}
-		LoggingHandler.setLogFileName(""); // check empty strings
-		if (LoggingHandler.getLogFileName().length() <= 0) {
-			throw new IllegalArgumentException("The name of the logging files can"
-					+ " be set to an empty String");
+		String emptyName = "";
+		try {
+			LoggingHandler.setLogFileName(emptyName); // check empty strings
+			throw new IllegalArgumentException(String.format("Setting the log file name to "
+					+ "\"%s\" should fail, but resulted in setting the log file name to \"%s\".", 
+					emptyName, LoggingHandler.getLogFileName()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
-		LoggingHandler.setLogFileName(null); // check null
-		if (LoggingHandler.getLogFileName() == null || LoggingHandler.getLogFileName().length() <= 0) {
-			throw new IllegalArgumentException("The name of the logging files can"
-					+ " be set to null");
+		String nullName = null;
+		try {
+			LoggingHandler.setLogFileName(nullName); // check empty strings
+			throw new IllegalArgumentException(String.format("Setting the log file name to "
+					+ "\"%s\" should fail, but resulted in setting the log file name to \"%s\".", 
+					nullName, LoggingHandler.getLogFileName()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
 		System.out.println("Test LoggingHandler.setLogFileName passed");
 	}
@@ -130,24 +140,31 @@ public class LoggingTestRunner {
 					LoggingHandler.getLoggingFolder() + ")");
 		}
 		folder = null;
-		folderPath = null;
-		LoggingHandler.setLoggingFolder(folder); // test null File
-		if (LoggingHandler.getLoggingFolder() == null) {
-			throw new IllegalArgumentException("The logging folder path can be set " +
-					"to null");
+		try {
+			LoggingHandler.setLoggingFolder(folder); // test null File
+			throw new IllegalArgumentException(String.format("Setting the log folder to "
+					+ "\"%s\" should fail, but resulted in setting the log folder to \"%s\".", 
+					folder, LoggingHandler.getLoggingFolder()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
-		LoggingHandler.setLoggingFolder(folderPath); // test null String
-		if (LoggingHandler.getLoggingFolder() == null) {
-			throw new IllegalArgumentException("The logging folder path can be set " +
-					"to null");
+		folderPath = null;
+		try {
+			LoggingHandler.setLoggingFolder(folderPath); // test null folder path
+			throw new IllegalArgumentException(String.format("Setting the log folder path to "
+					+ "\"%s\" should fail, but resulted in setting the log folder to \"%s\".", 
+					folderPath, LoggingHandler.getLoggingFolder()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
 		folderPath = "";
-		folder = new File(folderPath);
-		LoggingHandler.setLoggingFolder(folderPath); // test empty String
-		if (!LoggingHandler.getLoggingFolder().equals(folder)) {
-			throw new IllegalArgumentException("The logging folder path set (" +
-					folder.getAbsolutePath() + ") is different to the returned one (" +
-					LoggingHandler.getLoggingFolder().getAbsolutePath() + ")");
+		try {
+			LoggingHandler.setLoggingFolder(folderPath); // test empty folder path
+			throw new IllegalArgumentException(String.format("Setting the log folder path to "
+					+ "\"%s\" should fail, but resulted in setting the log folder to \"%s\".", 
+					folderPath, LoggingHandler.getLoggingFolder()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
 		System.out.println("Test LoggingHandler.setLoggingFolder passed");
 	}
@@ -300,11 +317,13 @@ public class LoggingTestRunner {
 		for (int i = 0; i < rep; i++) { // test negative numbers and zero
 			Logging testLogger = new Logging();
 			num = r.nextInt(Integer.MAX_VALUE) * (-1);
-			testLogger.setNumberLogFiles(num);
-			if (testLogger.getNumberLogFiles() <= 0) {
-				throw new IllegalArgumentException("The number of logging files set (" + 
-						num + ") is not properly converted to a positive one (" + 
-						testLogger.getNumberLogFiles() + ")");
+			try {
+				testLogger.setNumberLogFiles(num);
+				throw new IllegalArgumentException(String.format("Setting the log file number to "
+						+ "%s should fail, but resulted in setting the log file number to %s.", 
+						num, testLogger.getNumberLogFiles()));
+			} catch (IllegalArgumentException e) {
+				// Do nothing as this is expected behaviour.
 			}
 		}
 		System.out.println("Test (new Logging()).setNumberLogFiles passed");
@@ -327,15 +346,23 @@ public class LoggingTestRunner {
 						testLogger.getLogFileName() + ")");
 			}
 		}
-		testLogger.setLogFileName(""); // check empty strings
-		if (testLogger.getLogFileName().length() <= 0) {
-			throw new IllegalArgumentException("The name of the logging files can"
-					+ " be set to an empty String");
+		String emptyName = "";
+		try {
+			testLogger.setLogFileName(emptyName); // check empty strings
+			throw new IllegalArgumentException(String.format("Setting the log file name to "
+					+ "\"%s\" should fail, but resulted in setting the log file name to \"%s\".", 
+					emptyName, testLogger.getLogFileName()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
-		testLogger.setLogFileName(null); // check null
-		if (testLogger.getLogFileName() == null || testLogger.getLogFileName().length() <= 0) {
-			throw new IllegalArgumentException("The name of the logging files can"
-					+ " be set to null");
+		String nullName = null;
+		try {
+			testLogger.setLogFileName(nullName); // check empty strings
+			throw new IllegalArgumentException(String.format("Setting the log file name to "
+					+ "\"%s\" should fail, but resulted in setting the log file name to \"%s\".", 
+					nullName, testLogger.getLogFileName()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
 		System.out.println("Test (new Logging()).setLogFileName passed");
 	}
@@ -379,24 +406,31 @@ public class LoggingTestRunner {
 					testLogger.getLoggingFolder() + ")");
 		}
 		folder = null;
-		folderPath = null;
-		testLogger.setLoggingFolder(folder); // test null File
-		if (testLogger.getLoggingFolder() == null) {
-			throw new IllegalArgumentException("The logging folder path can be set " +
-					"to null");
+		try {
+			testLogger.setLoggingFolder(folder); // test null File
+			throw new IllegalArgumentException(String.format("Setting the log folder to "
+					+ "\"%s\" should fail, but resulted in setting the log folder to \"%s\".", 
+					folder, testLogger.getLoggingFolder()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
-		testLogger.setLoggingFolder(folderPath); // test null String
-		if (testLogger.getLoggingFolder() == null) {
-			throw new IllegalArgumentException("The logging folder path can be set " +
-					"to null");
+		folderPath = null;
+		try {
+			testLogger.setLoggingFolder(folderPath); // test null folder path
+			throw new IllegalArgumentException(String.format("Setting the log folder path to "
+					+ "\"%s\" should fail, but resulted in setting the log folder to \"%s\".", 
+					folderPath, testLogger.getLoggingFolder()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
 		folderPath = "";
-		folder = new File(folderPath);
-		testLogger.setLoggingFolder(folderPath); // test empty String
-		if (!testLogger.getLoggingFolder().equals(folder)) {
-			throw new IllegalArgumentException("The logging folder path set (" +
-					folder.getAbsolutePath() + ") is different to the returned one (" +
-					testLogger.getLoggingFolder().getAbsolutePath() + ")");
+		try {
+			testLogger.setLoggingFolder(folderPath); // test empty folder path
+			throw new IllegalArgumentException(String.format("Setting the log folder path to "
+					+ "\"%s\" should fail, but resulted in setting the log folder to \"%s\".", 
+					folderPath, testLogger.getLoggingFolder()));
+		} catch (IllegalArgumentException e) {
+			// Do nothing as this is expected behaviour.
 		}
 		System.out.println("Test LoggingHandler.setLoggingFolder passed");
 	}
