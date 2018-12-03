@@ -20,7 +20,7 @@ public class LoggingHandler {
 	/**
 	 * The version number of this program.
 	 */
-	public static final String VERSION = "1.2.0.0";
+	public static final String VERSION = "1.2.0.1";
 	/**
 	 * The centralised logger to be used.
 	 */
@@ -210,4 +210,38 @@ public class LoggingHandler {
 			throw new IllegalArgumentException("The number of log files cannot be zero or less.");
 		}
 	}
+	
+	/**
+	 * Log the specified message and print it to the console. Depending on the log level the 
+	 * message will be printed to err or out.
+	 * 
+	 * @param level - the log level
+	 * @param msg - the message to log
+	 */
+	public static void logAndPrint(Level level, String msg) {
+		LoggingHandler.getLog().log(level, msg);
+		if (Level.SEVERE.equals(level) || Level.WARNING.equals(level)) {
+			System.err.println(msg);
+		} else {
+			System.out.println(msg);
+		}
+	}
+	
+	/**
+	 * Log the specified message and print it to the console. Depending on the log level the 
+	 * message will be printed to err or out.
+	 * 
+	 * @param level - the log level
+	 * @param msg - the message to log
+	 * @param thrown - the exception raised
+	 */
+	public static void logAndPrint(Level level, String msg, Throwable thrown) {
+		LoggingHandler.getLog().log(level, msg, thrown);
+		if (Level.SEVERE.equals(level) || Level.WARNING.equals(level)) {
+			System.err.println(msg);
+		} else {
+			System.out.println(msg);
+		}
+	}
+	
 }
