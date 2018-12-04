@@ -220,10 +220,11 @@ public class LoggingHandler {
 	 */
 	public static void logAndPrint(Level level, String msg) {
 		LoggingHandler.getLog().log(level, msg);
+		String formattedMsg = String.format("[%s] %s", level.getName(), msg);
 		if (Level.SEVERE.equals(level) || Level.WARNING.equals(level)) {
-			System.err.println(msg);
+			System.err.println(formattedMsg);
 		} else {
-			System.out.println(msg);
+			System.out.println(formattedMsg);
 		}
 	}
 	
@@ -237,10 +238,11 @@ public class LoggingHandler {
 	 */
 	public static void logAndPrint(Level level, String msg, Throwable thrown) {
 		LoggingHandler.getLog().log(level, msg, thrown);
+		String formattedMsg = String.format("[%s] %s", level.getName(), msg);
 		if (Level.SEVERE.equals(level) || Level.WARNING.equals(level)) {
-			System.err.println(msg);
+			System.err.println(formattedMsg);
 		} else {
-			System.out.println(msg);
+			System.out.println(formattedMsg);
 		}
 	}
 	

@@ -233,10 +233,11 @@ public class Logging {
 	 */
 	public  void logAndPrint(Level level, String msg) {
 		this.getLog().log(level, msg);
+		String formattedMsg = String.format("[%s] %s", level.getName(), msg);
 		if (Level.SEVERE.equals(level) || Level.WARNING.equals(level)) {
-			System.err.println(msg);
+			System.err.println(formattedMsg);
 		} else {
-			System.out.println(msg);
+			System.out.println(formattedMsg);
 		}
 	}
 	
@@ -250,10 +251,11 @@ public class Logging {
 	 */
 	public void logAndPrint(Level level, String msg, Throwable thrown) {
 		this.getLog().log(level, msg, thrown);
+		String formattedMsg = String.format("[%s] %s", level.getName(), msg);
 		if (Level.SEVERE.equals(level) || Level.WARNING.equals(level)) {
-			System.err.println(msg);
+			System.err.println(formattedMsg);
 		} else {
-			System.out.println(msg);
+			System.out.println(formattedMsg);
 		}
 	}
 
