@@ -263,33 +263,38 @@ public class Logging {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((logFileName == null) ? 0 : logFileName.hashCode());
-		result = prime * result + ((logFolder == null) ? 0 : logFolder.hashCode());
-		result = prime * result + numberLogFiles;
+		result = prime * result + ((this.logFileName == null) ? 0 : this.logFileName.hashCode());
+		result = prime * result + ((this.logFolder == null) ? 0 : this.logFolder.hashCode());
+		result = prime * result + this.numberLogFiles;
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (this.getClass() != obj.getClass()) {
 			return false;
+		}
 		Logging other = (Logging) obj;
-		if (logFileName == null) {
-			if (other.logFileName != null)
+		if (this.logFileName == null) {
+			if (other.logFileName != null) {
 				return false;
-		} else if (!logFileName.equals(other.logFileName))
+			}
+		} else if (!this.logFileName.equals(other.logFileName)) {
 			return false;
-		if (logFolder == null) {
-			if (other.logFolder != null)
+		}
+		if (this.logFolder == null) {
+			if (other.logFolder != null) {
 				return false;
-		} else if (!logFolder.equals(other.logFolder))
+			}
+		} else if (!this.logFolder.equals(other.logFolder)) {
 			return false;
-		if (numberLogFiles != other.numberLogFiles)
+		}
+		if (this.numberLogFiles != other.numberLogFiles) {
 			return false;
+		}
 		return true;
 	}
 	
